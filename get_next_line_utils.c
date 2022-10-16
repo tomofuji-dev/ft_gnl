@@ -6,9 +6,11 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:29:32 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 14:40:36 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:48:04 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -31,7 +33,7 @@ char	*ft_strdup(const char *s)
 	if (!s)
 		return (NULL);
 	len = ft_strlen(s);
-	p = ft_malloc((len + 1) * sizeof(char));
+	p = malloc((len + 1) * sizeof(char));
 	if (!p)
 		return (NULL);
 	i = 0;

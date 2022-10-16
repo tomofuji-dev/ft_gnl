@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 13:35:13 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:50:53 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // 	save = (save + buff)['\n':]; // if len(buff['\n':]) == 0, save = NULL
 // }
 
-static void	split_next_line(static char **save_p, char **buff_p, char **line_p)
+static void	split_next_line(char **save_p, char **buff_p, char **line_p)
 {
 	char	*save_plus_buff;
 	char	*new_line_pos;
@@ -53,10 +53,10 @@ char	*get_next_line(int fd)
 	split_next_line(&save, NULL, &line);
 	if (line)
 		return (line);
-	buff = malloc((BUFF_SIZE + 1) * sizeof(char));
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	while (line == NULL)
 	{
-		code = read(fd, buff, BUFF_SIZE);
+		code = read(fd, buff, BUFFER_SIZE);
 		if (code == 0)
 		{
 			free(buff);
@@ -75,12 +75,14 @@ char	*get_next_line(int fd)
 }
 
 //cat "file"と等価
+#include <fcntl.h>
+#include <stdio.h>
 int	main(void)
 {
 	int		fd;
 	char	*line;
 
-	fd = open("file", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	while ((line = get_next_line(fd)) > 0)
 		printf("%s\n", line);
 	return (0);
