@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:29:32 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 12:45:42 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:40:36 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,42 @@ char	*ft_strdup(const char *s)
 	return (p);
 }
 
-ft_strjoin(*save_p, *buff_p)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	NULL, NULL -> NULL
-	save, NULL -> save
-	NULL, buff -> buff
+	size_t	i;
+
+	if (size == 0)
+		return (ft_strlen(src));
+	i = 0;
+	while (src[i] != '\0' && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	l1;
+	size_t	l2;
+	char	*p;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	p = malloc((l1 + l2 + 1) * sizeof(char));
+	if (!p)
+		return (NULL);
+	ft_strlcpy(p, s1, l1 + 1);
+	ft_strlcpy(p + l1, s2, l2 + 1);
+	return (p);
 }
 
 char	*ft_strchr(const char *s, int c)
