@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 15:20:39 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/16 15:35:52 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ char	*get_next_line(int fd)
 			if (!*save)
 				return (NULL);
 			else
-				return (save);
+			{
+				buff = NULL;
+				return (:'/n' or toend);
+			}
 		}
 		else if (code == -1)
 		{
