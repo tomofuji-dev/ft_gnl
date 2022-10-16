@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 14:50:53 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/16 15:20:39 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,23 @@ char	*get_next_line(int fd)
 	ssize_t		code;
 
 	line = NULL;
-	split_next_line(&save, NULL, &line);
+	buff = NULL;
+	split_next_line(&save, &buff, &line);
 	if (line)
 		return (line);
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+		return (NULL);
 	while (line == NULL)
 	{
 		code = read(fd, buff, BUFFER_SIZE);
 		if (code == 0)
 		{
 			free(buff);
-			return (save);
+			if (!*save)
+				return (NULL);
+			else
+				return (save);
 		}
 		else if (code == -1)
 		{
@@ -83,7 +89,7 @@ int	main(void)
 	char	*line;
 
 	fd = open("test.txt", O_RDONLY);
-	while ((line = get_next_line(fd)) > 0)
+	while ((line = get_next_line(fd)) != NULL)
 		printf("%s\n", line);
 	return (0);
 }
