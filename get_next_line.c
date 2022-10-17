@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/17 10:30:11 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:31:08 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_next_line(int fd)
 
 // split_next_line(save, buff, line)
 // {
-// 	if '\n' not in buff
+// 	if '\n' not in save + buff
 // 		save = save + buff;
 // 		return ;
 // 	line = (save + buff)[:'\n'];
