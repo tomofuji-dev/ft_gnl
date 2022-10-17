@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 15:35:52 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:14:57 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@
 // 	save = (save + buff)['\n':]; // if len(buff['\n':]) == 0, save = NULL
 // }
 
+static void	*ft_calloc(size_t count, size_t size)
+{
+	unsigned char	*p;
+	size_t			i;
+
+	if (size != 0 && count > SIZE_MAX / size)
+		return (NULL);
+	p = malloc(count * size);
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < count * size)
+		p[i++] = 0;
+	return (p);
+}
+
 static void	split_next_line(char **save_p, char **buff_p, char **line_p)
 {
 	char	*save_plus_buff;
@@ -35,11 +51,36 @@ static void	split_next_line(char **save_p, char **buff_p, char **line_p)
 		*save_p = save_plus_buff;
 		return ;
 	}
-	*new_line_pos = '\0';
-	*line_p = ft_strdup(save_plus_buff);
 	free(*save_p);
 	*save_p = ft_strdup(new_line_pos + 1);
+	*(new_line_pos + 1) = '\0';
+	*line_p = ft_strdup(save_plus_buff);
 	free(save_plus_buff);
+}
+
+static char	*handle_eof_or_error(char **save_p, char **buff_p, \
+								char **line_p, ssize_t code)
+{
+	free(*buff_p);
+	if (code == 0)
+	{
+		if (!*save_p || !**save_p)
+		{
+			free(*save_p);
+			return (NULL);
+		}
+		else
+		{
+			*line_p = *save_p;
+			*save_p = NULL;
+			return (*line_p);
+		}
+	}
+	else
+	{
+		free(*save_p);
+		return (NULL);
+	}
 }
 
 char	*get_next_line(int fd)
@@ -54,45 +95,47 @@ char	*get_next_line(int fd)
 	split_next_line(&save, &buff, &line);
 	if (line)
 		return (line);
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buff = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buff)
 		return (NULL);
 	while (line == NULL)
 	{
 		code = read(fd, buff, BUFFER_SIZE);
-		if (code == 0)
-		{
-			free(buff);
-			if (!*save)
-				return (NULL);
-			else
-			{
-				buff = NULL;
-				return (:'/n' or toend);
-			}
-		}
-		else if (code == -1)
-		{
-			free(buff);
-			free(save);
-			return (NULL);
-		}
+		if (code == 0 || code == -1)
+			return (handle_eof_or_error(&save, &buff, &line, code));
+		buff[code] = '\0'; 
 		split_next_line(&save, &buff, &line);
 	}
 	free(buff);
 	return (line);
 }
 
-//cat "file"と等価
-#include <fcntl.h>
-#include <stdio.h>
-int	main(void)
-{
-	int		fd;
-	char	*line;
+// //cat "file"と等価
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(int argc, char *argv[])
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open("test.txt", O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
-		printf("%s\n", line);
-	return (0);
-}
+// 	if (argc != 2)
+// 		return (0);
+// 	fd = open(argv[1], O_RDONLY);
+// 	while ((line = get_next_line(fd)) != NULL)
+// 		printf("%s", line);
+// 	return (0);
+// }
+
+// // cat "file"と等価
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+
+// 	fd = open("./tester/files/43_no_nl", O_RDONLY);
+// 	while ((line = get_next_line(fd)) != NULL)
+// 		printf("%s", line);
+// 	return (0);
+// }
