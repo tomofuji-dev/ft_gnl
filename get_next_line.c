@@ -6,21 +6,11 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/17 10:14:57 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:30:11 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-// split_next_line(save, buff, line)
-// {
-// 	// line = NULL;
-// 	if '\n' not in buff
-// 		save = save + buff;
-// 		return ;
-// 	line = (save + buff)[:'\n'];
-// 	save = (save + buff)['\n':]; // if len(buff['\n':]) == 0, save = NULL
-// }
 
 static void	*ft_calloc(size_t count, size_t size)
 {
@@ -109,6 +99,15 @@ char	*get_next_line(int fd)
 	free(buff);
 	return (line);
 }
+
+// split_next_line(save, buff, line)
+// {
+// 	if '\n' not in buff
+// 		save = save + buff;
+// 		return ;
+// 	line = (save + buff)[:'\n'];
+// 	save = (save + buff)['\n':]; // if len(buff['\n':]) == 0, save = NULL
+// }
 
 // //cat "file"と等価
 // #include <fcntl.h>
