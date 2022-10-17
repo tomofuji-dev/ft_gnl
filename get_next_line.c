@@ -6,7 +6,7 @@
 /*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:33 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/17 10:31:08 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:47:44 by tfujiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_next_line(int fd)
 		code = read(fd, buff, BUFFER_SIZE);
 		if (code == 0 || code == -1)
 			return (handle_eof_or_error(&save, &buff, &line, code));
-		buff[code] = '\0'; 
+		buff[code] = '\0';
 		split_next_line(&save, &buff, &line);
 	}
 	free(buff);
