@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfujiwar <tfujiwar@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: t.fuji <t.fuji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 11:37:49 by tfujiwar          #+#    #+#             */
-/*   Updated: 2022/10/16 14:48:53 by tfujiwar         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:05:21 by t.fuji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h>
-# include <stdlib.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+
+#  include <unistd.h>
+#  include <stdlib.h>
 
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
